@@ -3,3 +3,19 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.strip-img {
+    width: 60px;
+    height: auto;
+    display: block;
+}
+
+.stripmuren-tabel {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.stripmuren-tabel th, .stripmuren-tabel td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
