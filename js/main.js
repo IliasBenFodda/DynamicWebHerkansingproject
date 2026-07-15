@@ -6,6 +6,7 @@ const start = async () => {
         const stripmuren = data.map(mapRecord);
         statusElement.textContent = `Er zijn ${stripmuren.length} stripmuren opgehaald.`;
         renderTable(stripmuren, document.getElementById("app"));
+        initDetail(stripmuren, document.getElementById("app"), document.getElementById("detail"));
         window.stripmuren = stripmuren;
     } catch (fout) {
         statusElement.textContent = `Er ging iets mis: ${fout.message}`;
