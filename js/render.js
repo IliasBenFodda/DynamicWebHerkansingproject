@@ -19,6 +19,7 @@ const mapRecord = (record) => {
         postcode: veld.code_postal || "",
         uitgeverij: veld.maison_d_edition || "",
         oppervlakte: veld.surface_m2 || "",
+        coordinaten: veld.geo_point || null,
         weblink: veld.link_site_striproute || "",
         googleMaps: veld.google_maps || "",
         streetView: veld.google_street_view || "",
