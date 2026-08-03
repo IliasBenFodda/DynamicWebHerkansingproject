@@ -93,7 +93,9 @@ const initDetail = (stripmuren, tabelContainer, detailContainer) => {
             renderDetail(muur, detailContainer);
         });
     });
+    };
 
+    const initDetailSluiten = (detailContainer)=>{
     detailContainer.addEventListener("click", (event) => {
         if (event.target === detailContainer || event.target.className === "detail-sluiten") {
             sluitDetail(detailContainer);

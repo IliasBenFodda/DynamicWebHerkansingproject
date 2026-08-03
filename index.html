@@ -14,6 +14,20 @@
     <main>
         <p id="status" class="status">Laden...</p>
         <div id="kaart" class="kaart"></div>
+        <section id="controls" class="controls">
+            <input type="search" id="zoek" placeholder="Zoek op naam, tekenaar of adres">
+            <select id="filter-wijk"><option value="">Alle wijken</option></select>
+            <select id="filter-gemeente"><option value="">Alle gemeenten</option></select>
+            <select id="filter-postcode"><option value="">Alle postcodes</option></select>
+            <select id="sorteer">
+                <option value="naam">Sorteer op naam</option>
+                <option value="jaar">Sorteer op jaar</option>
+            </select>
+            <select id="richting">
+                <option value="oplopend">Oplopend</option>
+                <option value="aflopend">Aflopend</option>
+            </select>
+        </section>
         <section id="app" class="app"></section>
     </main>
     <div id="detail" class="detail hidden"></div>
@@ -21,6 +35,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/api.js"></script>
     <script src="js/render.js"></script>
+    <script src="js/filters.js"></script>
     <script src="js/map.js"></script>
     <script src="js/main.js"></script>
 </body>

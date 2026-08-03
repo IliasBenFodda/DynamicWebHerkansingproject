@@ -87,3 +87,10 @@
     height: 400px;
     margin-bottom: 50px;
 }
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}

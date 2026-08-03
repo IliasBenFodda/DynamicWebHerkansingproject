@@ -5,8 +5,8 @@ const start = async () => {
         const data = await fetchStripmuren();
         const stripmuren = data.map(mapRecord);
         statusElement.textContent = `Er zijn ${stripmuren.length} stripmuren opgehaald.`;
-        renderTable(stripmuren, document.getElementById("app"));
-        initDetail(stripmuren, document.getElementById("app"), document.getElementById("detail"));
+        initDetailSluiten(document.getElementById("detail"));
+        initFilters(stripmuren, document.getElementById("app"), document.getElementById("detail"));
         renderMap(stripmuren, document.getElementById("kaart"));
         window.stripmuren = stripmuren;
     } catch (fout) {
