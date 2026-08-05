@@ -40,6 +40,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+    z-index: 2000;
 }
 
 .detail-inhoud {
@@ -93,4 +94,24 @@
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 12px;
+}
+
+.favoriet-knop {
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.favorieten-lijst {
+    list-style: none;
+    padding: 0;
+}
+
+.favoriet-item {
+    margin-bottom: 8px;
+}
+
+.favoriet-img {
+    width: 60px;
 }

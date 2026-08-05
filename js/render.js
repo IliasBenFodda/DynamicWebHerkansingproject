@@ -28,10 +28,11 @@ const mapRecord = (record) => {
     };
 };
 
-const COLUMNS = ["Afbeelding", "Naam", "Tekenaar", "Jaar", "Adres", "Wijk", "Oppervlakte (m²)"];
+const COLUMNS = ["Favoriet", "Afbeelding", "Naam", "Tekenaar", "Jaar", "Adres", "Wijk", "Oppervlakte (m²)"];
 
 const buildRow = (muur) => `
     <tr data-id="${muur.id}">
+        <td>${buildFavorietKnop(muur.id)}</td>
         <td>${muur.afbeelding ? `<img class="strip-img" src="${muur.afbeelding}" alt="${muur.naam}">` : ""}</td>
         <td>${muur.naam}</td>
         <td>${muur.tekenaar}</td>

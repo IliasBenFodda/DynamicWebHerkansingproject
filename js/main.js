@@ -6,7 +6,12 @@ const start = async () => {
         const stripmuren = data.map(mapRecord);
         statusElement.textContent = `Er zijn ${stripmuren.length} stripmuren opgehaald.`;
         initDetailSluiten(document.getElementById("detail"));
-        initFilters(stripmuren, document.getElementById("app"), document.getElementById("detail"));
+        initFilters(
+            stripmuren,
+            document.getElementById("app"),
+            document.getElementById("detail"),
+            document.getElementById("favorieten")
+        );
         renderMap(stripmuren, document.getElementById("kaart"));
         window.stripmuren = stripmuren;
     } catch (fout) {

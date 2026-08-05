@@ -36,7 +36,7 @@ const sorteerStripmuren = (stripmuren, sleutel, richting) => {
     });
 };
 
-const initFilters = (stripmuren, tabelContainer, detailContainer) => {
+const initFilters = (stripmuren, tabelContainer, detailContainer, favorietenContainer) => {
     const zoek = document.getElementById("zoek");
     const wijk = document.getElementById("filter-wijk");
     const gemeente = document.getElementById("filter-gemeente");
@@ -59,6 +59,8 @@ const initFilters = (stripmuren, tabelContainer, detailContainer) => {
         const gesorteerd = sorteerStripmuren(gefilterd, sorteer.value, richting.value);
         renderTable(gesorteerd, tabelContainer);
         initDetail(gesorteerd, tabelContainer, detailContainer);
+        initFavorietKnoppen(tabelContainer, werkBij);
+        renderFavorieten(stripmuren, favorietenContainer, werkBij);
     };
 
     [zoek, wijk, gemeente, postcode, sorteer, richting].forEach((element) => {
