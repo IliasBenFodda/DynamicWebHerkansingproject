@@ -4,6 +4,10 @@ const uniekeWaarden = (stripmuren, sleutel) =>
         .sort();
 
 const vulKeuzelijst = (select, waarden) => {
+    while (select.options.length > 1) {
+        select.remove(1);
+    }
+
     waarden.forEach((waarde) => {
         const optie = document.createElement("option");
         optie.value = waarde;
@@ -44,28 +48,39 @@ const initFilters = (stripmuren, tabelContainer, detailContainer, favorietenCont
     const sorteer = document.getElementById("sorteer");
     const richting = document.getElementById("richting");
 
-    vulKeuzelijst(wijk, uniekeWaarden(stripmuren, "wijk"));
-    vulKeuzelijst(gemeente, uniekeWaarden(stripmuren, "gemeente"));
-    vulKeuzelijst(postcode, uniekeWaarden(stripmuren, "postcode"));
+    const vulFilterLijsten = (muren) => {
+        vulKeuzelijst(wijk, uniekeWaarden(muren, "wijk"));
+        vulKeuzelijst(gemeente, uniekeWaarden(muren, "gemeente"));
+        vulKeuzelijst(postcode, uniekeWaarden(muren, "postcode"));
+    };
 
     const werkBij = () => {
+        const inTaal = stripmuren.map(vertaalRecord);
         const criteria = {
             zoek: zoek.value,
             wijk: wijk.value,
             gemeente: gemeente.value,
             postcode: postcode.value,
         };
-        const gefilterd = filterStripmuren(stripmuren, criteria);
+        const gefilterd = filterStripmuren(inTaal, criteria);
         const gesorteerd = sorteerStripmuren(gefilterd, sorteer.value, richting.value);
         renderTable(gesorteerd, tabelContainer);
         initDetail(gesorteerd, tabelContainer, detailContainer);
         initFavorietKnoppen(tabelContainer, werkBij);
-        renderFavorieten(stripmuren, favorietenContainer, werkBij);
+        renderFavorieten(inTaal, favorietenContainer, werkBij);
     };
 
     [zoek, wijk, gemeente, postcode, sorteer, richting].forEach((element) => {
         element.addEventListener("input", werkBij);
     });
 
+    vulFilterLijsten(stripmuren.map(vertaalRecord));
     werkBij();
+
+    return () => {
+        const inTaal = stripmuren.map(vertaalRecord);
+        vulFilterLijsten(inTaal);
+        toonMarkers(inTaal);
+        werkBij();
+    };
 };

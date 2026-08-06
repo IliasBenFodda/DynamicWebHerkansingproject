@@ -115,3 +115,12 @@
 .favoriet-img {
     width: 60px;
 }
+
+.voorkeuren {
+    margin-bottom: 12px;
+}
+
+body.donker {
+    background: #222;
+    color: #eee;
+}

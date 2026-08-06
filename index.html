@@ -10,6 +10,15 @@
 <body>
     <header>
         <h1>Stripmuren in Brussel</h1>
+        <div id="voorkeuren" class="voorkeuren">
+            <button type="button" id="thema-knop">Donker thema</button>
+            <select id="taal">
+                <option value="nl">Nederlands</option>
+                <option value="fr">Français</option>
+            </select>
+            <button type="button" id="locatie-knop">Toon mijn locatie</button>
+            <span id="locatie-status"></span>
+        </div>
     </header>
     <main>
         <p id="status" class="status">Laden...</p>
@@ -35,6 +44,7 @@
     <footer><p>Dynamic-web/Ilias Ben-Fodda</p></footer>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/api.js"></script>
+    <script src="js/preferences.js"></script>
     <script src="js/render.js"></script>
     <script src="js/favorites.js"></script>
     <script src="js/filters.js"></script>

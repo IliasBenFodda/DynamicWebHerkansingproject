@@ -26,7 +26,7 @@ const verwijderFavoriet = (id) => {
 const buildFavorietKnop = (id) => {
     const actief = isFavoriet(id);
     return `<button type="button" class="favoriet-knop ${actief ? "actief" : ""}" data-id="${id}"
-        aria-label="${actief ? "Verwijder uit favorieten" : "Voeg toe aan favorieten"}">${actief ? "★" : "☆"}</button>`;
+        aria-label="${actief ? vertaal("verwijderenAria") : vertaal("toevoegenAria")}">${actief ? "★" : "☆"}</button>`;
 };
 
 const initFavorietKnoppen = (tabelContainer, opWijziging) => {
@@ -47,8 +47,8 @@ const renderFavorieten = (stripmuren, container, opWijziging) => {
 
     if (favorieteMuren.length === 0) {
         container.innerHTML = `
-            <h2>Mijn favorieten</h2>
-            <p class="favorieten-leeg">Je hebt nog geen favorieten. Klik op ☆ in de tabel.</p>`;
+            <h2>${vertaal("favorietenTitel")}</h2>
+            <p class="favorieten-leeg">${vertaal("favorietenLeeg")}</p>`;
         return;
     }
 
@@ -59,13 +59,13 @@ const renderFavorieten = (stripmuren, container, opWijziging) => {
                 ${muur.afbeelding ? `<img class="favoriet-img" src="${muur.afbeelding}" alt="${muur.naam}">` : ""}
                 <span class="favoriet-naam">${muur.naam}</span>
                 <button type="button" class="favoriet-verwijder" data-id="${muur.id}"
-                    aria-label="Verwijder ${muur.naam} uit favorieten">🗑 Verwijderen</button>
+                    aria-label="${vertaal("verwijderenAria")}">🗑 ${vertaal("verwijderen")}</button>
             </li>`
         )
         .join("");
 
     container.innerHTML = `
-        <h2>Mijn favorieten (${favorieteMuren.length})</h2>
+        <h2>${vertaal("favorietenTitel")} (${favorieteMuren.length})</h2>
         <ul class="favorieten-lijst">${items}</ul>`;
 
     container.querySelectorAll(".favoriet-verwijder").forEach((knop) => {

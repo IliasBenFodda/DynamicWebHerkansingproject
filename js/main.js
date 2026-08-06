@@ -4,15 +4,18 @@ const start = async () => {
     try {
         const data = await fetchStripmuren();
         const stripmuren = data.map(mapRecord);
-        statusElement.textContent = `Er zijn ${stripmuren.length} stripmuren opgehaald.`;
+        statusElement.dataset.aantal = stripmuren.length;
+        statusElement.textContent = vertaal("aantal").replace("{n}", stripmuren.length);
         initDetailSluiten(document.getElementById("detail"));
-        initFilters(
+        const herlaad = initFilters(
             stripmuren,
             document.getElementById("app"),
             document.getElementById("detail"),
             document.getElementById("favorieten")
         );
-        renderMap(stripmuren, document.getElementById("kaart"));
+        const kaart = renderMap(document.getElementById("kaart"));
+        toonMarkers(stripmuren.map(vertaalRecord));
+        initVoorkeuren(kaart, herlaad);
         window.stripmuren = stripmuren;
     } catch (fout) {
         statusElement.textContent = `Er ging iets mis: ${fout.message}`;

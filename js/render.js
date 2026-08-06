@@ -10,17 +10,21 @@ const mapRecord = (record) => {
     const veld = record.fields;
     return {
         id: record.recordid,
-        naam: veld.naam_fresco_nl || "Onbekend",
+        naamNl: veld.naam_fresco_nl || "Onbekend",
+        naamFr: veld.nom_de_la_fresque || "Inconnu",
         tekenaar: veld.dessinateur || "Onbekend",
         jaar: veld.date || "",
-        adres: veld.adres_nl || "",
+        adresNl: veld.adres_nl || "",
+        adresFr: veld.adresse_fr || "",
         wijk: veld.quartier || "",
-        gemeente: veld.gemeente || "",
+        gemeenteNl: veld.gemeente || "",
+        gemeenteFr: veld.commune || "",
         postcode: veld.code_postal || "",
         uitgeverij: veld.maison_d_edition || "",
         oppervlakte: veld.surface_m2 || "",
         coordinaten: veld.geo_point || null,
-        weblink: veld.link_site_striproute || "",
+        weblinkNl: veld.link_site_striproute || "",
+        weblinkFr: veld.lien_site_parcours_bd || "",
         googleMaps: veld.google_maps || "",
         streetView: veld.google_street_view || "",
         afbeelding: buildImageUrl(veld.image),
@@ -28,7 +32,24 @@ const mapRecord = (record) => {
     };
 };
 
-const COLUMNS = ["Favoriet", "Afbeelding", "Naam", "Tekenaar", "Jaar", "Adres", "Wijk", "Oppervlakte (m²)"];
+const vertaalRecord = (muur) => ({
+    ...muur,
+    naam: huidigeTaal === "fr" ? muur.naamFr : muur.naamNl,
+    adres: huidigeTaal === "fr" ? muur.adresFr : muur.adresNl,
+    gemeente: huidigeTaal === "fr" ? muur.gemeenteFr : muur.gemeenteNl,
+    weblink: huidigeTaal === "fr" ? muur.weblinkFr : muur.weblinkNl,
+});
+
+const COLUMN_KEYS = [
+    "kolomFavoriet",
+    "kolomAfbeelding",
+    "kolomNaam",
+    "kolomTekenaar",
+    "kolomJaar",
+    "kolomAdres",
+    "kolomWijk",
+    "kolomOppervlakte",
+];
 
 const buildRow = (muur) => `
     <tr data-id="${muur.id}">
@@ -43,7 +64,7 @@ const buildRow = (muur) => `
     </tr>`;
 
 const renderTable = (stripmuren, container) => {
-    const koppen = COLUMNS.map((kop) => `<th>${kop}</th>`).join("");
+    const koppen = COLUMN_KEYS.map((sleutel) => `<th>${vertaal(sleutel)}</th>`).join("");
     const rijen = stripmuren.map(buildRow).join("");
     container.innerHTML = `
         <table class="stripmuren-tabel">
@@ -58,23 +79,23 @@ const buildLink = (url, label) =>
 const renderDetail = (muur, container) => {
     container.innerHTML = `
         <div class="detail-inhoud">
-            <button class="detail-sluiten" type="button" aria-label="Sluiten">&times;</button>
+            <button class="detail-sluiten" type="button" aria-label="${vertaal("sluiten")}">&times;</button>
             ${muur.afbeeldingGroot ? `<img class="detail-afbeelding" src="${muur.afbeeldingGroot}" alt="${muur.naam}">` : ""}
             <h2>${muur.naam}</h2>
             <ul class="detail-info">
-                <li><strong>Tekenaar:</strong> ${muur.tekenaar}</li>
-                <li><strong>Jaar:</strong> ${muur.jaar}</li>
-                <li><strong>Adres:</strong> ${muur.adres}</li>
-                <li><strong>Wijk:</strong> ${muur.wijk}</li>
-                <li><strong>Gemeente:</strong> ${muur.gemeente}</li>
-                <li><strong>Postcode:</strong> ${muur.postcode}</li>
-                <li><strong>Uitgeverij:</strong> ${muur.uitgeverij}</li>
-                <li><strong>Oppervlakte:</strong> ${muur.oppervlakte} m²</li>
+                <li><strong>${vertaal("kolomTekenaar")}:</strong> ${muur.tekenaar}</li>
+                <li><strong>${vertaal("kolomJaar")}:</strong> ${muur.jaar}</li>
+                <li><strong>${vertaal("kolomAdres")}:</strong> ${muur.adres}</li>
+                <li><strong>${vertaal("kolomWijk")}:</strong> ${muur.wijk}</li>
+                <li><strong>${vertaal("gemeente")}:</strong> ${muur.gemeente}</li>
+                <li><strong>${vertaal("postcode")}:</strong> ${muur.postcode}</li>
+                <li><strong>${vertaal("uitgeverij")}:</strong> ${muur.uitgeverij}</li>
+                <li><strong>${vertaal("oppervlakte")}:</strong> ${muur.oppervlakte} m²</li>
             </ul>
             <div class="detail-links">
-                ${buildLink(muur.googleMaps, "Google Maps")}
-                ${buildLink(muur.streetView, "Street View")}
-                ${buildLink(muur.weblink, "Meer info")}
+                ${buildLink(muur.googleMaps, vertaal("googleMaps"))}
+                ${buildLink(muur.streetView, vertaal("streetView"))}
+                ${buildLink(muur.weblink, vertaal("meerInfo"))}
             </div>
         </div>`;
     container.classList.remove("hidden");
