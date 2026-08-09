@@ -150,3 +150,15 @@ body.donker {
     background: #222;
     color: #eee;
 }
+
+.lazy {
+    min-height: 40px;
+    background: #eee;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.lazy.geladen {
+    opacity: 1;
+    background: none;
+}

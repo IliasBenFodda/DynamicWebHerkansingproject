@@ -54,7 +54,7 @@ const COLUMN_KEYS = [
 const buildRow = (muur) => `
     <tr data-id="${muur.id}">
         <td>${buildFavorietKnop(muur.id)}</td>
-        <td>${muur.afbeelding ? `<img class="strip-img" src="${muur.afbeelding}" alt="${muur.naam}">` : ""}</td>
+        <td>${muur.afbeelding ? `<img class="strip-img lazy" data-src="${muur.afbeelding}" alt="${muur.naam}">` : ""}</td>
         <td>${muur.naam}</td>
         <td>${muur.tekenaar}</td>
         <td>${muur.jaar}</td>
