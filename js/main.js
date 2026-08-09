@@ -15,6 +15,7 @@ const start = async () => {
         );
         const kaart = renderMap(document.getElementById("kaart"));
         toonMarkers(stripmuren.map(vertaalRecord));
+        initValidatie(herlaad);
         initVoorkeuren(kaart, herlaad);
         window.stripmuren = stripmuren;
     } catch (fout) {

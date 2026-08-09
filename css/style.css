@@ -120,6 +120,32 @@
     margin-bottom: 12px;
 }
 
+.veld {
+    margin-bottom: 8px;
+}
+
+.veld label {
+    display: block;
+}
+
+.foutmelding {
+    display: block;
+    color: #c0392b;
+}
+
+.veld-fout {
+    border: 1px solid #c0392b;
+}
+
+.favoriet-label {
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.favoriet-notitie {
+    display: block;
+}
+
 body.donker {
     background: #222;
     color: #eee;

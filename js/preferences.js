@@ -42,6 +42,19 @@ const VERTALINGEN = {
         verwijderen: "Verwijderen",
         toevoegenAria: "Voeg toe aan favorieten",
         verwijderenAria: "Verwijder uit favorieten",
+        notitieTitel: "Notitie bij een favoriet",
+        notitieUitleg: "Kies een favoriet en bewaar er je eigen notitie bij.",
+        notitieMuur: "Stripmuur",
+        notitieLabel: "Label",
+        notitieTekst: "Notitie",
+        notitieKies: "Kies een favoriet",
+        notitieBewaren: "Notitie bewaren",
+        notitieBewaard: "Je notitie is bewaard.",
+        foutMuur: "Kies eerst een favoriete stripmuur.",
+        foutLabelLeeg: "Een label is verplicht.",
+        foutLabelKort: "Het label moet minstens 3 tekens lang zijn.",
+        foutTekstLeeg: "Een notitie is verplicht.",
+        foutTekstKort: "De notitie moet minstens 10 tekens lang zijn.",
     },
     fr: {
         titel: "Murs BD à Bruxelles",
@@ -83,6 +96,19 @@ const VERTALINGEN = {
         verwijderen: "Supprimer",
         toevoegenAria: "Ajouter aux favoris",
         verwijderenAria: "Retirer des favoris",
+        notitieTitel: "Note sur un favori",
+        notitieUitleg: "Choisissez un favori et enregistrez-y votre propre note.",
+        notitieMuur: "Fresque",
+        notitieLabel: "Étiquette",
+        notitieTekst: "Note",
+        notitieKies: "Choisissez un favori",
+        notitieBewaren: "Enregistrer la note",
+        notitieBewaard: "Votre note est enregistrée.",
+        foutMuur: "Choisissez d'abord une fresque favorite.",
+        foutLabelLeeg: "Une étiquette est obligatoire.",
+        foutLabelKort: "L'étiquette doit contenir au moins 3 caractères.",
+        foutTekstLeeg: "Une note est obligatoire.",
+        foutTekstKort: "La note doit contenir au moins 10 caractères.",
     },
 };
 
@@ -119,6 +145,7 @@ const pasTaalToe = () => {
     richting.options[1].textContent = vertaal("aflopend");
 
     document.getElementById("locatie-knop").textContent = vertaal("locatieKnop");
+    vertaalNotitieFormulier();
     pasThemaToe(localStorage.getItem(THEMA_SLEUTEL) || "licht");
 };
 

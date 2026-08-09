@@ -39,11 +39,37 @@
         </section>
         <section id="app" class="app"></section>
         <section id="favorieten" class="favorieten"></section>
+        <section class="notitie">
+            <h2 id="notitie-titel">Notitie bij een favoriet</h2>
+            <p id="notitie-uitleg">Kies een favoriet en bewaar er je eigen notitie bij.</p>
+            <form id="notitie-formulier" novalidate>
+                <div class="veld">
+                    <label id="label-muur" for="notitie-muur">Stripmuur</label>
+                    <select id="notitie-muur">
+                        <option value="">Kies een favoriet</option>
+                    </select>
+                    <span class="foutmelding" id="fout-notitie-muur"></span>
+                </div>
+                <div class="veld">
+                    <label id="label-label" for="notitie-label">Label</label>
+                    <input type="text" id="notitie-label">
+                    <span class="foutmelding" id="fout-notitie-label"></span>
+                </div>
+                <div class="veld">
+                    <label id="label-tekst" for="notitie-tekst">Notitie</label>
+                    <textarea id="notitie-tekst" rows="3"></textarea>
+                    <span class="foutmelding" id="fout-notitie-tekst"></span>
+                </div>
+                <button type="submit" id="notitie-verstuur">Notitie bewaren</button>
+                <p class="notitie-melding" id="notitie-melding"></p>
+            </form>
+        </section>
     </main>
     <div id="detail" class="detail hidden"></div>
     <footer><p>Dynamic-web/Ilias Ben-Fodda</p></footer>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/api.js"></script>
+    <script src="js/validation.js"></script>
     <script src="js/preferences.js"></script>
     <script src="js/render.js"></script>
     <script src="js/favorites.js"></script>

@@ -54,13 +54,17 @@ const renderFavorieten = (stripmuren, container, opWijziging) => {
 
     const items = favorieteMuren
         .map(
-            (muur) => `
+            (muur) => {
+                const notitie = notitieVoor(muur.id);
+                return `
             <li class="favoriet-item">
                 ${muur.afbeelding ? `<img class="favoriet-img" src="${muur.afbeelding}" alt="${muur.naam}">` : ""}
                 <span class="favoriet-naam">${muur.naam}</span>
+                ${notitie ? `<span class="favoriet-label">${notitie.label}</span><span class="favoriet-notitie">${notitie.tekst}</span>` : ""}
                 <button type="button" class="favoriet-verwijder" data-id="${muur.id}"
                     aria-label="${vertaal("verwijderenAria")}">🗑 ${vertaal("verwijderen")}</button>
-            </li>`
+            </li>`;
+            }
         )
         .join("");
 

@@ -68,6 +68,7 @@ const initFilters = (stripmuren, tabelContainer, detailContainer, favorietenCont
         initDetail(gesorteerd, tabelContainer, detailContainer);
         initFavorietKnoppen(tabelContainer, werkBij);
         renderFavorieten(inTaal, favorietenContainer, werkBij);
+        vulNotitieKeuze(inTaal);
     };
 
     [zoek, wijk, gemeente, postcode, sorteer, richting].forEach((element) => {
