@@ -1,72 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Homepages</title>
+    <title>Stripmuren in Brussel</title>
 </head>
 <body>
-    <header>
-        <h1>Stripmuren in Brussel</h1>
-        <div id="voorkeuren" class="voorkeuren">
-            <button type="button" id="thema-knop">Donker thema</button>
-            <select id="taal">
-                <option value="nl">Nederlands</option>
-                <option value="fr">Français</option>
-            </select>
-            <button type="button" id="locatie-knop">Toon mijn locatie</button>
-            <span id="locatie-status"></span>
+    <header class="kop">
+        <div class="kop-binnen">
+            <div class="kop-titel">
+                <h1>Stripmuren in Brussel</h1>
+            </div>
+            <div id="voorkeuren" class="voorkeuren">
+                <button type="button" id="thema-knop" class="thema-toggle" aria-pressed="false" title="Donker thema" aria-label="Donker thema">
+                    <span class="thema-bol" aria-hidden="true">
+                        <span class="thema-icoon thema-zon">☀️</span>
+                        <span class="thema-icoon thema-maan">🌙</span>
+                    </span>
+                </button>
+                <select id="taal" class="veld-invoer">
+                    <option value="nl">Nederlands</option>
+                    <option value="fr">Français</option>
+                </select>
+                <button type="button" id="locatie-knop" class="knop knop-rood">Toon mijn locatie</button>
+            </div>
         </div>
+        <p id="locatie-status" class="locatie-status"></p>
     </header>
-    <main>
-        <p id="status" class="status">Laden...</p>
-        <div id="kaart" class="kaart"></div>
-        <section id="controls" class="controls">
-            <input type="search" id="zoek" placeholder="Zoek op naam, tekenaar of adres">
-            <select id="filter-wijk"><option value="">Alle wijken</option></select>
-            <select id="filter-gemeente"><option value="">Alle gemeenten</option></select>
-            <select id="filter-postcode"><option value="">Alle postcodes</option></select>
-            <select id="sorteer">
-                <option value="naam">Sorteer op naam</option>
-                <option value="jaar">Sorteer op jaar</option>
-            </select>
-            <select id="richting">
-                <option value="oplopend">Oplopend</option>
-                <option value="aflopend">Aflopend</option>
-            </select>
+    <main class="inhoud">
+        <p id="status" class="status hidden"></p>
+
+        <section class="paneel">
+            <h2 id="kaart-titel" class="paneel-titel">Kaart</h2>
+            <div id="kaart" class="kaart"></div>
         </section>
-        <section id="app" class="app"></section>
-        <section id="favorieten" class="favorieten"></section>
-        <section class="notitie">
-            <h2 id="notitie-titel">Notitie bij een favoriet</h2>
-            <p id="notitie-uitleg">Kies een favoriet en bewaar er je eigen notitie bij.</p>
-            <form id="notitie-formulier" novalidate>
-                <div class="veld">
-                    <label id="label-muur" for="notitie-muur">Stripmuur</label>
-                    <select id="notitie-muur">
-                        <option value="">Kies een favoriet</option>
-                    </select>
-                    <span class="foutmelding" id="fout-notitie-muur"></span>
-                </div>
-                <div class="veld">
-                    <label id="label-label" for="notitie-label">Label</label>
-                    <input type="text" id="notitie-label">
-                    <span class="foutmelding" id="fout-notitie-label"></span>
-                </div>
-                <div class="veld">
-                    <label id="label-tekst" for="notitie-tekst">Notitie</label>
-                    <textarea id="notitie-tekst" rows="3"></textarea>
-                    <span class="foutmelding" id="fout-notitie-tekst"></span>
-                </div>
-                <button type="submit" id="notitie-verstuur">Notitie bewaren</button>
-                <p class="notitie-melding" id="notitie-melding"></p>
-            </form>
+
+        <section class="paneel">
+            <h2 id="overzicht-titel" class="paneel-titel">Overzicht</h2>
+            <div id="controls" class="controls">
+                <input type="search" id="zoek" class="veld-invoer zoekveld" placeholder="Zoek op naam, tekenaar of adres">
+                <select id="filter-wijk" class="veld-invoer"><option value="">Alle wijken</option></select>
+                <select id="filter-gemeente" class="veld-invoer"><option value="">Alle gemeenten</option></select>
+                <select id="filter-postcode" class="veld-invoer"><option value="">Alle postcodes</option></select>
+                <select id="sorteer" class="veld-invoer">
+                    <option value="naam">Sorteer op naam</option>
+                    <option value="jaar">Sorteer op jaar</option>
+                </select>
+                <select id="richting" class="veld-invoer">
+                    <option value="oplopend">Oplopend</option>
+                    <option value="aflopend">Aflopend</option>
+                </select>
+            </div>
+            <div id="app" class="app"></div>
         </section>
+
+        <div class="onderkant">
+            <section id="favorieten" class="paneel favorieten"></section>
+            <section class="paneel notitie">
+                <h2 id="notitie-titel" class="paneel-titel">Notitie bij een favoriet</h2>
+                <p id="notitie-uitleg" class="paneel-uitleg">Kies een favoriet en bewaar er je eigen notitie bij.</p>
+                <form id="notitie-formulier" novalidate>
+                    <div class="veld">
+                        <label id="label-muur" for="notitie-muur">Stripmuur</label>
+                        <select id="notitie-muur" class="veld-invoer">
+                            <option value="">Kies een favoriet</option>
+                        </select>
+                        <span class="foutmelding" id="fout-notitie-muur"></span>
+                    </div>
+                    <div class="veld">
+                        <label id="label-label" for="notitie-label">Label</label>
+                        <input type="text" id="notitie-label" class="veld-invoer">
+                        <span class="foutmelding" id="fout-notitie-label"></span>
+                    </div>
+                    <div class="veld">
+                        <label id="label-tekst" for="notitie-tekst">Notitie</label>
+                        <textarea id="notitie-tekst" class="veld-invoer" rows="3"></textarea>
+                        <span class="foutmelding" id="fout-notitie-tekst"></span>
+                    </div>
+                    <button type="submit" id="notitie-verstuur" class="knop knop-blauw">Notitie bewaren</button>
+                    <p class="notitie-melding" id="notitie-melding"></p>
+                </form>
+            </section>
+        </div>
     </main>
     <div id="detail" class="detail hidden"></div>
-    <footer><p>Dynamic-web/Ilias Ben-Fodda</p></footer>
+    <footer class="voet"><p>Dynamic-web/Ilias Ben-Fodda</p></footer>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/api.js"></script>
     <script src="js/validation.js"></script>

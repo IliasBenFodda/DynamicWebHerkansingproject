@@ -4,7 +4,6 @@ const TAAL_SLEUTEL = "stripmuren-taal";
 const VERTALINGEN = {
     nl: {
         titel: "Stripmuren in Brussel",
-        aantal: "Er zijn {n} stripmuren opgehaald.",
         zoekPlaceholder: "Zoek op naam, tekenaar of adres",
         alleWijken: "Alle wijken",
         alleGemeenten: "Alle gemeenten",
@@ -43,7 +42,8 @@ const VERTALINGEN = {
         toevoegenAria: "Voeg toe aan favorieten",
         verwijderenAria: "Verwijder uit favorieten",
         notitieTitel: "Notitie bij een favoriet",
-        notitieUitleg: "Kies een favoriet en bewaar er je eigen notitie bij.",
+        kaartTitel: "Kaart",
+        overzichtTitel: "Overzicht",        notitieUitleg: "Kies een favoriet en bewaar er je eigen notitie bij.",
         notitieMuur: "Stripmuur",
         notitieLabel: "Label",
         notitieTekst: "Notitie",
@@ -58,7 +58,6 @@ const VERTALINGEN = {
     },
     fr: {
         titel: "Murs BD à Bruxelles",
-        aantal: "{n} fresques ont été chargées.",
         zoekPlaceholder: "Chercher par nom, dessinateur ou adresse",
         alleWijken: "Tous les quartiers",
         alleGemeenten: "Toutes les communes",
@@ -97,6 +96,8 @@ const VERTALINGEN = {
         toevoegenAria: "Ajouter aux favoris",
         verwijderenAria: "Retirer des favoris",
         notitieTitel: "Note sur un favori",
+        kaartTitel: "Carte",
+        overzichtTitel: "Aperçu",
         notitieUitleg: "Choisissez un favori et enregistrez-y votre propre note.",
         notitieMuur: "Fresque",
         notitieLabel: "Étiquette",
@@ -118,18 +119,17 @@ const vertaal = (sleutel) => VERTALINGEN[huidigeTaal][sleutel];
 
 const pasThemaToe = (thema) => {
     const knop = document.getElementById("thema-knop");
-    document.body.classList.toggle("donker", thema === "donker");
-    knop.textContent = thema === "donker" ? vertaal("naarLicht") : vertaal("naarDonker");
+    const donker = thema === "donker";
+    document.body.classList.toggle("donker", donker);
+    const label = donker ? vertaal("naarLicht") : vertaal("naarDonker");
+    knop.setAttribute("aria-pressed", donker);
+    knop.setAttribute("aria-label", label);
+    knop.title = label;
 };
 
 const pasTaalToe = () => {
     document.documentElement.lang = huidigeTaal;
     document.querySelector("header h1").textContent = vertaal("titel");
-
-    const status = document.getElementById("status");
-    if (status.dataset.aantal) {
-        status.textContent = vertaal("aantal").replace("{n}", status.dataset.aantal);
-    }
 
     document.getElementById("zoek").placeholder = vertaal("zoekPlaceholder");
     document.getElementById("filter-wijk").options[0].textContent = vertaal("alleWijken");
@@ -145,6 +145,8 @@ const pasTaalToe = () => {
     richting.options[1].textContent = vertaal("aflopend");
 
     document.getElementById("locatie-knop").textContent = vertaal("locatieKnop");
+    document.getElementById("kaart-titel").textContent = vertaal("kaartTitel");
+    document.getElementById("overzicht-titel").textContent = vertaal("overzichtTitel");
     vertaalNotitieFormulier();
     pasThemaToe(localStorage.getItem(THEMA_SLEUTEL) || "licht");
 };

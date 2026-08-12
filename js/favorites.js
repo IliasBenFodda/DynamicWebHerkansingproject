@@ -47,7 +47,7 @@ const renderFavorieten = (stripmuren, container, opWijziging) => {
 
     if (favorieteMuren.length === 0) {
         container.innerHTML = `
-            <h2>${vertaal("favorietenTitel")}</h2>
+            <h2 class="paneel-titel">${vertaal("favorietenTitel")}</h2>
             <p class="favorieten-leeg">${vertaal("favorietenLeeg")}</p>`;
         return;
     }
@@ -69,7 +69,7 @@ const renderFavorieten = (stripmuren, container, opWijziging) => {
         .join("");
 
     container.innerHTML = `
-        <h2>${vertaal("favorietenTitel")} (${favorieteMuren.length})</h2>
+        <h2 class="paneel-titel">${vertaal("favorietenTitel")} (${favorieteMuren.length})</h2>
         <ul class="favorieten-lijst">${items}</ul>`;
 
     container.querySelectorAll(".favoriet-verwijder").forEach((knop) => {

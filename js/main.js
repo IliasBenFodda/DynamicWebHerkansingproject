@@ -4,8 +4,6 @@ const start = async () => {
     try {
         const data = await fetchStripmuren();
         const stripmuren = data.map(mapRecord);
-        statusElement.dataset.aantal = stripmuren.length;
-        statusElement.textContent = vertaal("aantal").replace("{n}", stripmuren.length);
         initDetailSluiten(document.getElementById("detail"));
         const herlaad = initFilters(
             stripmuren,
@@ -20,6 +18,7 @@ const start = async () => {
         window.stripmuren = stripmuren;
     } catch (fout) {
         statusElement.textContent = `Er ging iets mis: ${fout.message}`;
+        statusElement.classList.remove("hidden");
     }
 };
 
