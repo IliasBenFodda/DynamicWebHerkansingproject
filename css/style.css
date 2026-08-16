@@ -503,6 +503,8 @@ body.donker .thema-maan {
     border-top: 4px solid #c8102e;
 }
 
+/* Donker thema: dezelfde opbouw, enkel andere kleuren. Alles hangt aan de klasse
+   die preferences.js op de body zet. */
 body.donker {
     background: #10141f;
     color: #e8ecf6;
@@ -560,6 +562,7 @@ body.donker .stripmuren-tabel tbody tr:hover {
     background: #3a1f27;
 }
 
+/* Tablet: de twee panelen onderaan naast elkaar past niet meer, dus onder elkaar. */
 @media (max-width: 900px) {
     .onderkant {
         grid-template-columns: 1fr;
@@ -570,6 +573,7 @@ body.donker .stripmuren-tabel tbody tr:hover {
     }
 }
 
+/* Gsm: de kop wordt gestapeld en de filters nemen de volle breedte. */
 @media (max-width: 600px) {
     .kop-binnen {
         display: block;

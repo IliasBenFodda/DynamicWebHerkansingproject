@@ -1,6 +1,8 @@
 const THEMA_SLEUTEL = "stripmuren-thema";
 const TAAL_SLEUTEL = "stripmuren-taal";
 
+// Alle teksten van de interface staan hier samen, per taal. Zo hoef ik voor een
+// vertaling niet in index.html of in de andere js-bestanden te zoeken.
 const VERTALINGEN = {
     nl: {
         titel: "Stripmuren in Brussel",
@@ -113,10 +115,13 @@ const VERTALINGEN = {
     },
 };
 
+// Staat bewust globaal: render.js en filters.js lezen deze taal uit.
+// Nederlands is de standaard zolang de gebruiker niets gekozen heeft.
 let huidigeTaal = localStorage.getItem(TAAL_SLEUTEL) || "nl";
 
 const vertaal = (sleutel) => VERTALINGEN[huidigeTaal][sleutel];
 
+// Eén klasse op body volstaat, de kleuren zelf zitten in style.css onder body.donker.
 const pasThemaToe = (thema) => {
     const knop = document.getElementById("thema-knop");
     const donker = thema === "donker";
@@ -127,6 +132,8 @@ const pasThemaToe = (thema) => {
     knop.title = label;
 };
 
+// Alles wat vast in index.html staat, wordt hier opnieuw ingevuld. De tabel, de
+// favorieten en het detail worden elders al hertekend en zitten hier dus niet in.
 const pasTaalToe = () => {
     document.documentElement.lang = huidigeTaal;
     document.querySelector("header h1").textContent = vertaal("titel");
@@ -151,6 +158,8 @@ const pasTaalToe = () => {
     pasThemaToe(localStorage.getItem(THEMA_SLEUTEL) || "licht");
 };
 
+// Werkt enkel op localhost of via https, browsers blokkeren geolocatie op http.
+// getCurrentPosition krijgt twee callbacks mee: één als het lukt, één als het misgaat.
 const toonMijnLocatie = (kaart) => {
     const status = document.getElementById("locatie-status");
 
@@ -191,6 +200,7 @@ const initVoorkeuren = (kaart, opWijziging) => {
         huidigeTaal = taalKeuze.value;
         localStorage.setItem(TAAL_SLEUTEL, huidigeTaal);
         pasTaalToe();
+        // het openstaande detail zou anders in de oude taal blijven staan
         sluitDetail(document.getElementById("detail"));
         opWijziging();
     });

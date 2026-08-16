@@ -1,3 +1,5 @@
+// Opbouw van de bestands-URL zoals beschreven op de datasetpagina van Opendatasoft.
+// /300/ geeft een kleine versie voor de tabel, /download/ de volledige foto.
 const IMAGE_BASE = "https://bruxellesdata.opendatasoft.com/explore/dataset/bruxelles_parcours_bd/files";
 
 const buildImageUrl = (image) =>
@@ -6,6 +8,7 @@ const buildImageUrl = (image) =>
 const buildImageUrlGroot = (image) =>
     image && image.id ? `${IMAGE_BASE}/${image.id}/download/` : "";
 
+// Lege velden laat de API gewoon weg, vandaar overal een || als vangnet.
 const mapRecord = (record) => {
     const veld = record.fields;
     return {
@@ -32,6 +35,8 @@ const mapRecord = (record) => {
     };
 };
 
+// NL en FR zitten allebei in hetzelfde record, dus bij een taalwissel
+// moet er niets opnieuw opgehaald worden.
 const vertaalRecord = (muur) => ({
     ...muur,
     naam: huidigeTaal === "fr" ? muur.naamFr : muur.naamNl,
@@ -40,6 +45,8 @@ const vertaalRecord = (muur) => ({
     weblink: huidigeTaal === "fr" ? muur.weblinkFr : muur.weblinkNl,
 });
 
+// Sleutels in plaats van vaste tekst, anders blijft de tabelkop Nederlands
+// als je naar het Frans schakelt.
 const COLUMN_KEYS = [
     "kolomFavoriet",
     "kolomAfbeelding",
@@ -51,6 +58,7 @@ const COLUMN_KEYS = [
     "kolomOppervlakte",
 ];
 
+// data-src in plaats van src: observer.js zet de echte src pas als de rij in beeld komt.
 const buildRow = (muur) => `
     <tr data-id="${muur.id}">
         <td>${buildFavorietKnop(muur.id)}</td>
@@ -106,6 +114,8 @@ const sluitDetail = (container) => {
     container.innerHTML = "";
 };
 
+// De listeners worden telkens opnieuw gezet, want renderTable heeft de oude rijen
+// net vervangen door nieuwe.
 const initDetail = (stripmuren, tabelContainer, detailContainer) => {
     const rijen = tabelContainer.querySelectorAll("tbody tr");
 
@@ -118,6 +128,8 @@ const initDetail = (stripmuren, tabelContainer, detailContainer) => {
     };
 
     const initDetailSluiten = (detailContainer)=>{
+    // Deze staat maar één keer op de container zelf, want de inhoud wisselt voortdurend.
+    // Klikken naast het venster sluit het ook, zoals bij de meeste pop-ups.
     detailContainer.addEventListener("click", (event) => {
         if (event.target === detailContainer || event.target.className === "detail-sluiten") {
             sluitDetail(detailContainer);

@@ -1,3 +1,4 @@
+// Notities zitten in een apart object per record-id, los van de lijst met favorieten.
 const NOTITIES_SLEUTEL = "stripmuren-notities";
 
 const laadNotities = () => {
@@ -23,8 +24,10 @@ const vertaalNotitieFormulier = () => {
     document.getElementById("notitie-muur").options[0].textContent = vertaal("notitieKies");
 };
 
+// Je kan enkel een notitie schrijven bij een muur die al favoriet is.
 const vulNotitieKeuze = (stripmuren) => {
     const keuze = document.getElementById("notitie-muur");
+    // deze lijst wordt bij elke wijziging opnieuw opgebouwd, dus onthoud ik de keuze
     const vorigeKeuze = keuze.value;
     const favorieten = laadFavorieten();
     const favorieteMuren = stripmuren.filter((muur) => favorieten.includes(muur.id));
@@ -43,6 +46,8 @@ const vulNotitieKeuze = (stripmuren) => {
     keuze.value = favorieten.includes(vorigeKeuze) ? vorigeKeuze : "";
 };
 
+// Een lege boodschap betekent dat het veld in orde is. Zo kan dezelfde functie
+// de fout tonen én meteen zeggen of het veld geldig was.
 const toonFout = (veldId, boodschap) => {
     const foutElement = document.getElementById(`fout-${veldId}`);
     const veld = document.getElementById(veldId);
@@ -51,6 +56,8 @@ const toonFout = (veldId, boodschap) => {
     return boodschap === "";
 };
 
+// De drie controles staan bewust niet in een && achter elkaar: zo krijgt de gebruiker
+// alle foutmeldingen tegelijk te zien in plaats van één per keer.
 const controleerFormulier = (muurId, label, tekst) => {
     const muurGeldig = toonFout("notitie-muur", muurId === "" ? vertaal("foutMuur") : "");
     const labelGeldig = toonFout(
@@ -77,6 +84,7 @@ const initValidatie = (opWijziging) => {
     const melding = document.getElementById("notitie-melding");
 
     formulier.addEventListener("submit", (event) => {
+        // het formulier staat op novalidate in index.html, de controle gebeurt hier
         event.preventDefault();
 
         const muurId = document.getElementById("notitie-muur").value;

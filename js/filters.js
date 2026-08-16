@@ -1,9 +1,12 @@
+// De filterlijsten komen uit de data zelf, zo kloppen ze altijd met wat de API teruggeeft.
+// Set haalt de dubbels eruit: 70 records, maar veel minder wijken en gemeenten.
 const uniekeWaarden = (stripmuren, sleutel) =>
     [...new Set(stripmuren.map((muur) => muur[sleutel]))]
         .filter((waarde) => waarde !== "")
         .sort();
 
 const vulKeuzelijst = (select, waarden) => {
+    // optie 0 is "Alle wijken/gemeenten/postcodes" en die moet blijven staan
     while (select.options.length > 1) {
         select.remove(1);
     }
@@ -16,6 +19,7 @@ const vulKeuzelijst = (select, waarden) => {
     });
 };
 
+// Een lege filterwaarde betekent "toon alles", daarom die controle op "" per criterium.
 const filterStripmuren = (stripmuren, criteria) =>
     stripmuren.filter((muur) => {
         const zoek = criteria.zoek.toLowerCase();
@@ -31,7 +35,9 @@ const filterStripmuren = (stripmuren, criteria) =>
 
 const sorteerStripmuren = (stripmuren, sleutel, richting) => {
     const factor = richting === "aflopend" ? -1 : 1;
+    // kopie met [...], want sort() past de originele array aan
     return [...stripmuren].sort((a, b) => {
+        // jaar als getal vergelijken, anders komt "1991" voor "89"
         const waardeA = sleutel === "jaar" ? Number(a.jaar) : a.naam.toLowerCase();
         const waardeB = sleutel === "jaar" ? Number(b.jaar) : b.naam.toLowerCase();
         if (waardeA < waardeB) return -1 * factor;
@@ -54,6 +60,8 @@ const initFilters = (stripmuren, tabelContainer, detailContainer, favorietenCont
         vulKeuzelijst(postcode, uniekeWaarden(muren, "postcode"));
     };
 
+    // Alles wordt in één keer opnieuw opgebouwd. Bijhouden wat er precies veranderd is
+    // zou hier alleen maar ingewikkelder zijn.
     const werkBij = () => {
         const inTaal = stripmuren.map(vertaalRecord);
         const criteria = {
@@ -73,6 +81,7 @@ const initFilters = (stripmuren, tabelContainer, detailContainer, favorietenCont
         initLazyLoading(favorietenContainer);
     };
 
+    // input vuurt ook bij de select-elementen, dus één listener volstaat voor alles
     [zoek, wijk, gemeente, postcode, sorteer, richting].forEach((element) => {
         element.addEventListener("input", werkBij);
     });
@@ -80,6 +89,8 @@ const initFilters = (stripmuren, tabelContainer, detailContainer, favorietenCont
     vulFilterLijsten(stripmuren.map(vertaalRecord));
     werkBij();
 
+    // Wordt na een taalwissel opgeroepen: dan moeten ook de filterlijsten
+    // en de markers op de kaart mee veranderen.
     return () => {
         const inTaal = stripmuren.map(vertaalRecord);
         vulFilterLijsten(inTaal);

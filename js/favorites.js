@@ -1,6 +1,9 @@
+// Ik bewaar enkel de recordid's. De rest van de gegevens komt toch elke keer
+// opnieuw van de API, en zo blijft de opslag klein.
 const FAVORIETEN_SLEUTEL = "stripmuren-favorieten";
 
 const laadFavorieten = () => {
+    // LocalStorage bewaart enkel tekst, dus alles gaat er als JSON in en uit
     const opgeslagen = localStorage.getItem(FAVORIETEN_SLEUTEL);
     return opgeslagen ? JSON.parse(opgeslagen) : [];
 };
@@ -34,6 +37,7 @@ const initFavorietKnoppen = (tabelContainer, opWijziging) => {
 
     knoppen.forEach((knop) => {
         knop.addEventListener("click", (event) => {
+            // zonder dit klikt de rij eronder mee en opent ook de detailweergave
             event.stopPropagation();
             wisselFavoriet(knop.dataset.id);
             opWijziging();
@@ -41,6 +45,7 @@ const initFavorietKnoppen = (tabelContainer, opWijziging) => {
     });
 };
 
+// De id's uit LocalStorage worden hier terug gekoppeld aan de records van de API.
 const renderFavorieten = (stripmuren, container, opWijziging) => {
     const favorieten = laadFavorieten();
     const favorieteMuren = stripmuren.filter((muur) => favorieten.includes(muur.id));
